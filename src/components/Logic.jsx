@@ -1,13 +1,15 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import GridLayout from "./GridLayout";
 import './logic.css'
 
 function Logic() {
     const [layout, setLayout] = useState(GridLayout())
+    const [points, setPoints] = useState(1000)
     let indexOfArray
     let indexOfElement
     let oldValue
-
+    console.log(points, layout)
     function upHandler() {
         return setLayout(prev => {
             prev.forEach((x, y) => {
@@ -29,8 +31,10 @@ function Logic() {
                         if (oldValue === 0) return x
                         if (oldValue === 2 || oldValue === 3) {
                             x.splice(indexOfElement, 1, 1)
+                            oldValue === 2? setPoints(prev => prev + 30): setPoints(prev => "You Win!!")
                             return x   
                         }
+                        setPoints(prev => prev - 10)
                         x.splice(indexOfElement, 1, oldValue)
                         return x
                     }
@@ -47,10 +51,12 @@ function Logic() {
                 if (x[four] === x[0]) return x
                 if (x[four-1] === 0) return x
                 if (x[four-1] === 2 || x[four-1] === 3) {
+                    x[four-1] === 2? setPoints(prev => prev + 30): setPoints(prev => "You Win!!")
                     x.splice(four, 1 , 1)
                     x.splice(four - 1, 1, 4)
                     return x
                 }
+                setPoints(prev => prev - 10)
                 x.splice(four, 1 , x[four - 1])
                 x.splice(four - 1, 1, 4)
                 return x
@@ -67,10 +73,12 @@ function Logic() {
                 if (x[four] === x[x.length-1]) return x
                 if (x[four+1] === 0) return x
                 if (x[four+1] === 2 || x[four+1] === 3) {
+                    x[four+1] === 2? setPoints(prev => prev + 30): setPoints(prev => "You Win!!")
                     x.splice(four, 1 , 1)
                     x.splice(four + 1, 1, 4)
                     return x
                 }
+                setPoints(prev => prev - 10)
                 x.splice(four, 1 , x[four + 1])
                 x.splice(four + 1, 1, 4)
                 return x
@@ -93,16 +101,17 @@ function Logic() {
                     if (indexOfArray-1 === -1) return x
                     if (indexOfArray-1 === y ) {
                         oldValue = x[indexOfElement]
-                        console.log(oldValue)
                         if (oldValue === 0) return x
                         x.splice(indexOfElement, 1, 4)
                     }
                     if (indexOfArray === y ){
                         if (oldValue === 0) return x
                         if (oldValue === 2 || oldValue === 3) {
+                            oldValue === 2? setPoints(prev => prev + 30): setPoints(prev => "You Win!!")
                             x.splice(indexOfElement, 1, 1)
                             return x   
                         }
+                        setPoints(prev => prev - 10)
                         x.splice(indexOfElement, 1, oldValue)
                         return x
                     }
@@ -110,27 +119,48 @@ function Logic() {
                 }).reverse()
             })
     }
+    function buttonHandler(e) {
+        document.querySelectorAll('.game-controller>button')
+            .forEach(x => {
+                if (e.key === x.dataset.direction) {
+                    x.click()
+                }
+            })
+    }
 
-
+    useEffect(() => {
+        window.addEventListener('keydown', buttonHandler)
+        return () => document.removeEventListener("keydown", buttonHandler);
+    }, [buttonHandler])
+    
     return (
         <>
-        <div className="game-container">
-            <div className="game-board">
-                <table>
-                    <tbody>
-                        {layout.map((x, y) => <tr key={y}>
-                            {x.map((a, b) => <td data-layout-number={a} key={b + 100}></td>)}
-                            </tr>)}
-                    </tbody>
-                </table>
-            </div>
-            <div className="game-controller">
-                <button type="button" onClick={upHandler}>Up</button>
-                <br />
-                <button type="button" onClick={leftHandler} >Left</button>
-                <button type="button" onClick={rightHandler}>Right</button>
-                <br />
-                <button type="button" onClick={downHandler}>Down</button>
+        <div className="game">
+            <div className="game-container">
+                <div className="game-score-board">
+                    <a href="/" className="title">flatman</a>
+                    <p>{typeof points === "number"?
+                        "Score": points === 0? 
+                        "You Lose!!":""} {points}</p>
+                </div>
+                <div className="game-board">
+                    <table>
+                        <tbody>
+                            {layout.map((x, y) => <tr key={y}>
+                                {x.map((a, b) => <td data-layout-number={a} key={b + 100}></td>)}
+                                </tr>)}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="game-controller">
+                    <button type="button" onClick={upHandler} data-direction="w">&#8593;</button>
+                    <br />
+                    <button type="button" onClick={leftHandler} data-direction="a">&#8592;</button>
+                    <button className="layout">&#8594;</button>
+                    <button type="button" onClick={rightHandler} data-direction="d">&#8594;</button>
+                    <br />
+                    <button type="button" onClick={downHandler} data-direction="s">&#8595;</button>
+                </div>
             </div>
         </div>
         

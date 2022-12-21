@@ -1,6 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    background-color: bisque;
+    height: 100vh;
+    gap: 1rem;
+}
+.game-score-board {
+    flex-basis: 10%;
+    display: flex;
+    font-size: 40px;
+    font-weight: 600;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    background-color: brown;
+    color: white;
+    text-transform: uppercase;
+}
+
+.game-score-board p {
+    background-color: coral;
+    text-align: center;
+    width: 180px;
+    padding: 5px;
+    font-size: 30px;
+    border-radius: 10px;
+    
+}
+
+.game-board {
+    flex-basis: 50%
+}
+
+.game-controller {
+    flex-basis: 20%
+}
+
 td {
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     border: 1px solid black;   
 }
 
@@ -21,4 +72,35 @@ td[data-layout-number="3"] {
 }
 td[data-layout-number="4"] {
     background-color: red;
+}
+
+.game-controller {
+    text-align: center;
+}
+
+.game-controller button{
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    background-color: rgba(220, 20, 60, 0.8);
+    border-radius: 10px;
+    border: none;
+}
+
+.game-controller button:hover {
+    background-color: rgba(220, 20, 60, 0.9);
+}
+
+.game-controller button:active {
+    background-color: rgba(220, 20, 60, 1);
+}
+
+.game-controller .layout {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    visibility: hidden;
+    pointer-events: none;
 }
