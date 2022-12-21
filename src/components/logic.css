@@ -1,0 +1,24 @@
+td {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;   
+}
+
+td[data-layout-number="0"] {
+    background-color: gray;
+}
+
+td[data-layout-number="1"] {
+    background-color: white;
+}
+
+td[data-layout-number="2"] {
+    background-color: yellow;
+}
+
+td[data-layout-number="3"] {
+    background-color: blue;
+}
+td[data-layout-number="4"] {
+    background-color: red;
+}
