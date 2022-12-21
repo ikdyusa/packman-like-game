@@ -7,6 +7,8 @@
 .game {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .game-container {
@@ -15,13 +17,14 @@
     align-items: center;
     width: 40%;
     background-color: bisque;
-    height: 100vh;
     gap: 1rem;
 }
+
+
 .game-score-board {
     flex-basis: 10%;
     display: flex;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
     justify-content: space-evenly;
     width: 100%;
@@ -31,12 +34,17 @@
     text-transform: uppercase;
 }
 
+.game-score-board a {
+ text-decoration: none;   
+ color: white;
+}
+
 .game-score-board p {
     background-color: coral;
     text-align: center;
-    width: 180px;
+    width: 160px;
     padding: 5px;
-    font-size: 30px;
+    font-size: 20px;
     border-radius: 10px;
     
 }
@@ -77,6 +85,7 @@ td[data-layout-number="4"] {
 .game-controller {
     text-align: center;
     outline:none;
+    padding-bottom: 1rem;
 }
 
 .game-controller button{
@@ -90,6 +99,10 @@ td[data-layout-number="4"] {
     border: none;
 }
 
+.game-tips {
+    width: 40%;
+}
+
 .game-controller button:hover {
     background-color: rgba(220, 20, 60, 0.9);
 }
@@ -99,9 +112,25 @@ td[data-layout-number="4"] {
 }
 
 .game-controller .layout {
-    width: 70px;
-    height: 70px;
     display: inline-block;
     visibility: hidden;
     pointer-events: none;
+}
+
+@media screen and (max-width:1180px) {
+    .game-container {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .game-container {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width:680px) {
+    .game-container {
+        width: 100%;
+    }
 }

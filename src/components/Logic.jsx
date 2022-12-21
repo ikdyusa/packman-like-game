@@ -180,6 +180,15 @@ function Logic() {
                     <button type="button" onClick={downHandler}>&#8595;</button>
                 </div>
             </div>
+            <div className="game-tips">
+                <h1>Rules</h1>
+                <ol type="1">
+                    <li>Win the game by moving the red square to the blue square.</li>
+                    <li>Move the red square either by clicking arrow button shown in the browser or by pressing 'w', 'a', 's', 'd' (or arrow keys in your keyboard)</li>
+                    <li>Every time the red square moved to a white square, your score would be decreased by 10 points (see the score on top of this page), but if it moved to yellow square, you will receive 30 points.</li>
+                    <li>The gray square and the board edges are acting as a wall, so you won't be able to pass through, and there is no penalties if you bump into them.</li>
+                </ol>
+            </div>
         </div>
         
         </>
