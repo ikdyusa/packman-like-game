@@ -76,6 +76,7 @@ td[data-layout-number="4"] {
 
 .game-controller {
     text-align: center;
+    outline:none;
 }
 
 .game-controller button{

@@ -1,15 +1,14 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import GridLayout from "./GridLayout";
 import './logic.css'
 
 function Logic() {
     const [layout, setLayout] = useState(GridLayout())
     const [points, setPoints] = useState(1000)
+    const ref = useRef(null);
     let indexOfArray
     let indexOfElement
     let oldValue
-    console.log(points, layout)
     function upHandler() {
         return setLayout(prev => {
             prev.forEach((x, y) => {
@@ -119,19 +118,39 @@ function Logic() {
                 }).reverse()
             })
     }
-    function buttonHandler(e) {
-        document.querySelectorAll('.game-controller>button')
-            .forEach(x => {
-                if (e.key === x.dataset.direction) {
-                    x.click()
-                }
-            })
+
+    function keyDownHandler(e) {
+
+        switch(e.key.toLowerCase()) {
+            case "w":
+            case 'arrowup':
+                return upHandler()
+            case "a":
+            case 'arrowleft':
+                return leftHandler()
+            case "d":
+            case 'arrowright':
+                return rightHandler()
+            case "s":
+            case 'arrowdown':
+                return downHandler()
+            default:
+                return e.key
+        }
     }
+    function windowClickHandler() {
+        ref.current.focus()
+        return
+    }
+    
+    useEffect(() => {
+        window.addEventListener("click", windowClickHandler)
+        return () => window.removeEventListener("click", windowClickHandler)
+    }, [windowClickHandler])
 
     useEffect(() => {
-        window.addEventListener('keydown', buttonHandler)
-        return () => document.removeEventListener("keydown", buttonHandler);
-    }, [buttonHandler])
+        ref.current.focus()
+    }, [])
     
     return (
         <>
@@ -140,8 +159,7 @@ function Logic() {
                 <div className="game-score-board">
                     <a href="/" className="title">flatman</a>
                     <p>{typeof points === "number"?
-                        "Score": points === 0? 
-                        "You Lose!!":""} {points}</p>
+                        (points <= 0)?'YOU LOSE!!':`Score ${points}`: points}</p>
                 </div>
                 <div className="game-board">
                     <table>
@@ -152,14 +170,14 @@ function Logic() {
                         </tbody>
                     </table>
                 </div>
-                <div className="game-controller">
-                    <button type="button" onClick={upHandler} data-direction="w">&#8593;</button>
+                <div className="game-controller" ref={ref} tabIndex={-1} onKeyDown={keyDownHandler}>
+                    <button type="button" onClick={upHandler}>&#8593;</button>
                     <br />
-                    <button type="button" onClick={leftHandler} data-direction="a">&#8592;</button>
+                    <button type="button" onClick={leftHandler}>&#8592;</button>
                     <button className="layout">&#8594;</button>
-                    <button type="button" onClick={rightHandler} data-direction="d">&#8594;</button>
+                    <button type="button" onClick={rightHandler}>&#8594;</button>
                     <br />
-                    <button type="button" onClick={downHandler} data-direction="s">&#8595;</button>
+                    <button type="button" onClick={downHandler}>&#8595;</button>
                 </div>
             </div>
         </div>
